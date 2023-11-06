@@ -68,4 +68,51 @@ Este repositorio es para la Práctica 1 apartado 6 de IAW
 
 ## Es importante eliminar instalaciones previas para no saturarlo.
 
-- 
+-  Borraremos instalaciones previas del directorio *_/tmp_* y es muy importante de aqui en adelante tras usar este comando: 
+
+
+
+    ``` 
+    #Antes de mover el contenido eliminamos instalaciones previas de WordPress en /var/www/html
+
+    rm -rf /var/www/html/*
+    ```
+
+- Es *SUPER IMPORTANTE* que este escrito de la siguiente manera, por que si no, borraremos el directorio /html de completamente.
+
+- Por ultimo paso hacemos un *_mv_* para mover el repositorio al directorio que en este caso queremos nosotros.
+
+    ```
+   #Movemos el contenido de /tmp/wordpress a /var/html
+
+    mv -f /tmp/wordpress/* /var/www/html
+
+    ```
+
+## Archivo *_.env_* y MySql.
+
+- Tenemos que antes de modificar nuestro script para lanzarlo y generar la base de datos. Tenemos que tener configurado nuestro archivo *_.env_* para poder lanzar el script con las variables necesarias.
+
+- El archivo .env en nuestro caso se vería de la siguiente manera:
+
+    ![](images/cap3.png)
+
+- Una vez configurado todo esto, podemos lanzar el script que queremos ejecutar, recordamos que el `<<<` nos sirve para escribir lineas dentro de MySql.
+
+    ``` 
+    # Creamos la base de datos y el usuario de base de datos.
+
+    mysql -u root <<< "DROP DATABASE IF EXISTS $WORDPRESS_DB_NAME"
+    mysql -u root <<< "CREATE DATABASE $WORDPRESS_DB_NAME"
+    mysql -u root <<< "DROP USER IF EXISTS $WORDPRESS_DB_USER@$IP_CLIENTE_MYSQL"
+    mysql -u root <<< "CREATE USER $WORDPRESS_DB_USER@$IP_CLIENTE_MYSQL IDENTIFIED BY '$WORDPRESS_DB_PASSWORD'"
+    mysql -u root <<< "GRANT ALL PRIVILEGES ON $WORDPRESS_DB_NAME.* TO $WORDPRESS_DB_USER@$IP_CLIENTE_MYSQL"
+
+    ```
+- Si accedemos a MySql por consola, podremos ver que se ha creado de manera correcta:
+
+    ![](images/cap1.png)
+
+
+
+## Hacemos uso del comando *_sed_* para el archivo wp_config.
