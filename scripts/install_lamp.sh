@@ -13,6 +13,10 @@ apt update
 
 apt install apache2 -y
 
+#Copiamos el directorio 000-default.conf
+
+cp ../conf/000-default.conf /etc/apache2/sites-available/000-default.conf
+
 # Instalamos Mysql L.
 
 sudo apt install mysql-server -y

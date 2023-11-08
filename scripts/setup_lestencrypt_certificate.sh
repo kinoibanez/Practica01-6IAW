@@ -40,4 +40,4 @@ certbot --apache -m $CERTIFICATE_EMAIL --agree-tos --no-eff-email -d $CERTIFICAT
 
 #Con el siguiente comando podemos comprobar que hay un temporizador en el sistema encargado de realizar la renovación de los certificados de manera automática.
 
-systemctl list-timers
+#systemctl list-timers

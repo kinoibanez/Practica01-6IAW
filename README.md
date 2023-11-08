@@ -338,24 +338,3 @@ Este repositorio es para la Práctica 1 apartado 6 de IAW
 
     `a2enmod rewrite`
 
-## Configuración del archivo .htaccess.
-
-- Este archivo se encuentra dentro del directorio `/var/www/html` por lo tanto para poder configurarlo en mi caso he accedido al directorio y haciendo uso del comando `sudo nano` y lo modificamos copiando y pegando como lo tiene [Jose Juan apartado 1.4.12](https://josejuansanchez.org/iaw/practica-01-06/index.html)
-
-    ![](images/cap7.png)
-
-- Encontramos una serie de parámetros nuevos los cuales son los siguientes:
-    ```
-    RewriteRule ^index\.php$ - [L]
-    RewriteCond %{REQUEST_FILENAME} !-f
-    RewriteCond %{REQUEST_FILENAME} !-d
-    RewriteRule . /index.php [L]
-
-    ```
-
-- La función de cada uno es la siguiente:
-
-    `  RewriteRule ^index\.php$ - [L]` : 
-    `  RewriteCond %{REQUEST_FILENAME} !-f `:
-    `  RewriteCond %{REQUEST_FILENAME} !-d`:
-    `  RewriteRule . /index.php [L]` :

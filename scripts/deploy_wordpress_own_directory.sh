@@ -29,15 +29,19 @@ sudo apt install unzip -y
 
 #Ejecuto el comando zip para descomprimirlo.
 
-unzip -u /tmp/latest.zip -d /tmp/wordpress/
+unzip -u /tmp/latest.zip -d /tmp/
 
 #Antes de mover el contenido eliminamos instalaciones previas de WordPress en /var/www/html
 
 rm -rf /var/www/html/*
 
+#Creamos la carpeta wordpress
+
+mkdir -p /var/www/html/wordpress
+
 #Movemos el contenido de /tmp/wordpress a /var/html
 
-mv -f /tmp/wordpress/* /var/www/html
+mv -f /tmp/wordpress/* /var/www/html/wordpress
 
 # Creamos la base de datos y el usuario de base de datos.
 
@@ -60,7 +64,7 @@ sed -i "s/localhost/$WORDPRESS_DB_HOST/" /var/www/html/wordpress/wp-config.php
 
 #Cambiamos los permisos para el usuario www-data:www-data.
 
-chown -R www-data:www-data /var/www/html/
+chown -R www-data:www-data /var/www/html/wordpress
 
 
 #Configuramos las variables WP_SITEURL y WP_HOME del archivo de configuración wp-config.php.
@@ -76,6 +80,11 @@ cp /var/www/html/wordpress/index.php /var/www/html
 
 sed -i "s#wp-blog-header.php#wordpress/wp-blog-header.php#" /var/www/html/index.php
 
+
 # Habilitamos el módulo mod_rewrite de Apache.
 
 a2enmod rewrite
+
+#Reiniciamos el apache2
+
+sudo systemctl restart apache2
