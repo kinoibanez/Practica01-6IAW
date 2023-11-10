@@ -61,6 +61,18 @@ sed -i "s/localhost/$WORDPRESS_DB_HOST/" /var/www/html/wp-config.php
 
 chown -R www-data:www-data /var/www/html/
 
+#Copiamos el archivo .htaccess
+cp ../htaccess/.htaccess /var/www/html/
+ 
+
+# Habilitamos el módulo mod_rewrite de Apache.
+
+a2enmod rewrite
+
+#Reiniciamos el apache2
+
+sudo systemctl restart apache2
+
 
 
 

@@ -194,6 +194,34 @@ Este repositorio es para la Práctica 1 apartado 6 de IAW
     ![](images/cap2.png )
 
 
+## Finalizamos el directorio de root.
+
+- Nos faltaba por añadir al *_script_* una serie de lineas que hemos añadido en el directorio propio, las cuales son:
+
+    ```
+    #Copiamos el archivo .htaccess
+
+    cp ../htaccess/.htaccess /var/www/html/
+    
+
+    # Habilitamos el módulo mod_rewrite de Apache.
+
+    a2enmod rewrite
+
+    #Reiniciamos el apache2
+
+    sudo systemctl restart apache2
+
+    ```
+
+- Al estar bien configurado, si lanzamos de nuevo el *_script_* con nombre *_deploy_wordpress_root_directory.sh_*  y accedemos a nuestro sitio web. *_Nombre del dominio_*
+
+- Nos debera de volver a pedir la instalación, configuración de los enlaces permanentes y que podamos hacer como al final de la practica de *_su propio directorio_*
+
+- Aqui adjunto una captura después de haberlo instalado de nuevo, configurado los enlaces permanente y dentro del post *_Hola Mundo!_*
+
+    ![](images/cap14.png)
+
 # Configuración de WordPress en su propio directorio.
 
 - Para configurarlo en su directorio primero tendremos que añadir un script más con el siguiente nombre: *_deploy_wordpress_own_directory.sh_* de esta manera indicaremos que vamos ha realizar la misma descarga dentro de su propio directo.
@@ -416,4 +444,4 @@ Este repositorio es para la Práctica 1 apartado 6 de IAW
 
 - Al igual que poder descargarnos el tema que queramos y poder acceder también al apartado *HOLA MUNDO!* y que entremos de manera correcta.
 
-    ![](images/cap13.png)
+    ![](images/cap13.png) 
