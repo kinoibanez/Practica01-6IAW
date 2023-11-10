@@ -80,6 +80,9 @@ cp /var/www/html/wordpress/index.php /var/www/html
 
 sed -i "s#wp-blog-header.php#wordpress/wp-blog-header.php#" /var/www/html/index.php
 
+#
+cp ../htaccess/.htaccess /var/www/html/
+ 
 
 # Habilitamos el módulo mod_rewrite de Apache.
 

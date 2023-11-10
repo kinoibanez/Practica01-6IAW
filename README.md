@@ -24,6 +24,8 @@ Este repositorio es para la Práctica 1 apartado 6 de IAW
 - `sudo ./install_lamp`
 
 
+- Es muy importante tener 
+
 ## Creamos el script *_DEPLOY_*
 
 - Vamos a crear un script que nos permite la instalación de WordPress de manera automatica. 
@@ -237,6 +239,35 @@ Este repositorio es para la Práctica 1 apartado 6 de IAW
     mv -f /tmp/wordpress/* /var/www/html
 
     ```
+## Configuración del archivo 000-default.cnf y 000-default-le-ssl.conf
+
+- Estos archivos forman parte del directorio `/etc/apache2/sites-availables` y realmente nos permite modificar los paramentros de Apache2.
+
+- En el *000-default.cnf* tendremos que tenerlo de la siguiente manera: 
+    ```
+    <VirtualHost *:80>
+    #ServerName www.example.com
+    ServerAdmin webmaster@localhost
+    DocumentRoot /var/www/html
+    DirectoryIndex index.php index.html
+    <Directory "/var/www/html">
+        AllowOverride All
+    </Directory>
+
+    ErrorLog ${APACHE_LOG_DIR}/error.log
+    CustomLog ${APACHE_LOG_DIR}/access.log combined
+    </VirtualHost>
+    ```
+
+- Aquí la regla mas importanet que hemos añadido es un *_DirectoryIndex_* para indicar el orden en el que queremos que se ejecuten los index.
+
+- AllowOverrider All: Que nos permite controlar que directivas queremos que se ejecuten dentro del directorio `.htaccess` que crearemos más adelante.
+
+- Encontramos también un archivo llamado *000-default-le-ssl.conf*  el cual tendrá el siguiente aspecto.
+
+    ![](images/cap8.png)
+
+- Donde observamos una serie de párametros como habilitar todas las conexiones a través del puerto 443. Tenemos que tener en cuenta que este archivo de configuración debera de crearse de manera automatica una vez que lancemos el script de own_directory y setup_lestencrypt_certificate.
 
 ## Configuración previa al lanzamiento de la base de datos (En mi caso).
 
@@ -338,3 +369,51 @@ Este repositorio es para la Práctica 1 apartado 6 de IAW
 
     `a2enmod rewrite`
 
+# IMPORTANTE.
+
+- El siguiente paso que tenemos que añadir en el script es el siguiente: Crear un archivo `.htaccess` en el caso de que no lo hayamos creado y si no, añadir ese archivo.
+
+- Si tenemos que crear el script desde el principio tendremos que añadir el siguiente archivo.
+
+    ```
+     # BEGIN WordPress
+    <IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteBase /
+    RewriteRule ^index\.php$ - [L]
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteRule . /index.php [L]
+    </IfModule>
+    # END WordPress 
+    ```
+
+- Para añadirlo al script tendremos que hacer lo siguiente: `cp ../htaccess/.htaccess /var/www/html/`
+
+- También sera muy muy importante tener configurado de manera correcta nuestro archivo *000-default.conf* para su correcto funcionamiento. 
+
+- Es muy importante que el módulo ALLOWOVERRIDE ALL este áctivo.
+
+## Explicación de las reglas que estamos ejecutando anteriormente en el archivo *_.htaccess_*
+
+- Las reglas que hemos aplicado anteriormente tienen su explicación en el [Apartado 1.4.12 de Documentación de Jose Juan](https://josejuansanchez.org/iaw/practica-01-06/index.html). 
+
+- Las reglas serán las siguientes: 
+
+   ![](images/cap10.png)
+
+# Resolución de la práctica.
+
+- En el caso de que se haya configurado de manera correcta, podremos acceder a nuestro nombre de dominio en la URL y nos redirige a la página de WordPress.
+
+- Nos regitramos y nos damos cuenta que podemos acceder a nuestro usuario.
+
+![](images/cap11.png)
+
+- Si accedemos al apartado llamado *_Ejemplo de página_* nos encontraremos que podemos acceder y en la URL se añadirá la página.
+
+    ![](images/cap12.png)
+
+- Al igual que poder descargarnos el tema que queramos y poder acceder también al apartado *HOLA MUNDO!* y que entremos de manera correcta.
+
+    ![](images/cap13.png)
